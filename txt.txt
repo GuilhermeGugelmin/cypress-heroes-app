@@ -1,0 +1,14 @@
+1 npm install
+2 npm run setup
+3 npm run dev
+
+
+client:
+4 npx cypress open
+
+----------------
+
+admin@test.com
+test@test.com
+
+test123
