@@ -44,8 +44,8 @@ describe('Admin User', () => {
         newPrice: '11',
         newFans: '22',
         newSaves: '33',
-        imageCapitain: 'D:/Desktop/TI/QA/cypress-heroes/0011.jpg',
-        imageGhost: 'D:/Desktop/TI/QA/cypress-heroes/0022.jpg',
+        imageCapitain: 'D:/Desktop/TI/QA/cypress-heroes-app/0011.jpg',
+        imageGhost: 'D:/Desktop/TI/QA/cypress-heroes-app/0022.jpg',
         checkLogin: 'Logout',
         nameNewHero: 'Ghost',
         priceNewHero: '99',
@@ -54,9 +54,14 @@ describe('Admin User', () => {
     }
     
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
+    const Chance = require('chance')
+    const chance = new Chance()
 
+
+    const randomName = chance.first()
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
     it('Like Hero', () => {
         
@@ -88,10 +93,8 @@ describe('Admin User', () => {
         })
         })
     })
-
     
 /////////////////////////////////////////////////////////////////////////////////////////////////
-
 
     it('Hire a Hero', () => {
         
@@ -126,9 +129,7 @@ describe('Admin User', () => {
         })
     })
 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////
-
 
     it('Decline Hero Hiring', () => {
         
@@ -163,11 +164,10 @@ describe('Admin User', () => {
         })
     })
 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-
     it('Hero Edit And Check The Return To Home', () => {
+
         
         // LOGIN
         cy.visit(BASE_URL)
@@ -179,7 +179,11 @@ describe('Admin User', () => {
 
         // HERO EDIT 
         cy.get(selectorsList.editHeroButton).eq(1).click()
-        cy.get(selectorsList.editName).clear().type(userData.newName)
+
+        // INSERT RANDOM NAME 
+        cy.get(selectorsList.editName).clear().type(randomName)
+
+        // EDIT OTHERS STATS 
         cy.get(selectorsList.editPrice).clear().type(userData.newPrice)
         cy.get(selectorsList.editFans).clear().type(userData.newFans)
         cy.get(selectorsList.editSaves).clear().type(userData.newSaves)
@@ -187,13 +191,14 @@ describe('Admin User', () => {
         cy.get(selectorsList.selectImage).selectFile(userData.imageCapitain)
         cy.get(selectorsList.submitButton).eq(1).click()
 
+        // CHECK RANDON NAME 
+        cy.get(selectorsList.cardsHero).contains(randomName)
+
         // CHECK RETURN TO HOME PAGE
         cy.contains(userData.checkLogin)
     })  
 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////
-
 
     it('New Hero And Check The Return To Home', () => {
         
@@ -207,7 +212,11 @@ describe('Admin User', () => {
 
         // NEW HERO
         cy.get(selectorsList.newHeroButton).click()
-        cy.get(selectorsList.nameNewHero).type(userData.nameNewHero)
+
+        // INSERT RANDOM NAME 
+        cy.get(selectorsList.nameNewHero).type(randomName)
+
+        // INSERT OTHERS STATS 
         cy.get(selectorsList.priceNewHero).type(userData.priceNewHero)
         cy.get(selectorsList.fansNewHero).type(userData.fansNewHero)
         cy.get(selectorsList.savesNewHero).type(userData.savesNewHero)
@@ -215,12 +224,14 @@ describe('Admin User', () => {
         cy.get(selectorsList.selectImage).selectFile(userData.imageGhost)
         cy.get(selectorsList.submitButton).eq(1).click()
 
+        // CHECK RANDON NAME 
+        cy.get(selectorsList.cardsHero).contains(randomName)
+
         // CHECK RETURN TO HOME PAGE
         cy.contains(userData.checkLogin)
     })  
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
-
 
     it('Delete Hero', () => {
 
@@ -251,9 +262,7 @@ describe('Admin User', () => {
         })
     })  
 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////
-
 
     it('Decline Delete Hero', () => {
 
@@ -273,7 +282,7 @@ describe('Admin User', () => {
         })
 
         // DECLINE DELETE
-        cy.get(selectorsList.deleteButton).eq(6).click()
+        cy.get(selectorsList.deleteButton).eq(3).click()
         cy.get(selectorsList.declineDeleteButton).click()
         cy.wait(500)
 
